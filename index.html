@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Spicy Chicken</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: #f5f5f5;
+        }
+        .recipe-card {
+            width: 100%;
+            max-width: 400px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .recipe-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .recipe-image {
+            width: 100%;
+            height: 250px;
+            background: url('./assets/img1.jpeg') no-repeat center;
+            background-size: cover;
+        }
+        .recipe-header {
+            padding: 15px;
+            text-align: center;
+            background: #f8f9fa;
+        }
+        .recipe-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+        }
+        .status-bar {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+        .recipe-info {
+            padding: 15px;
+            text-align: center;
+        }
+        .likes, .comments {
+            font-size: 14px;
+            color: #666;
+            margin: 5px 0;
+        }
+        .ingredients, .steps {
+            margin: 10px 0;
+            display: none;
+            text-align: left;
+            animation: fadeIn 0.5s ease;
+        }
+        .ingredients.active, .steps.active {
+            display: block;
+        }
+        .btn {
+            padding: 10px 20px;
+            background: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .timer {
+            font-size: 14px;
+            color: #666;
+            margin-top: 10px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @media (max-width: 400px) {
+            .recipe-card {
+                max-width: 90%;
+            }
+            .recipe-image {
+                height: 150px;
+            }
+            .recipe-title {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="recipe-card">
+        <div class="recipe-image"></div>
+        <div class="recipe-header">
+            <h1 class="recipe-title">Spicy Chicken Shop</h1>
+            <div class="status-bar">06:42 AM IST, Thu, Aug 21, 2025 | ❤️ 54 | 💬 6/11</div>
+        </div>
+        <div class="recipe-info">
+            <button class="btn" onclick="toggleSection('ingredients')">Show Ingredients</button>
+            <button class="btn" onclick="toggleSection('steps')">Show Steps</button>
+            <div class="ingredients">
+                <strong>Ingredients:</strong><br>
+                - 2 chicken breasts<br>
+                - 1 tbsp chili powder<br>
+                - 1 tsp salt<br>
+                - 2 tbsp oil
+            </div>
+            <div class="steps">
+                <strong>Preparation time and serving size:</strong><br>
+                - Prep: 10 mins, Cook: 20 mins, Serves: 4<br>
+                <strong>Steps:</strong><br>
+                1. Marinate chicken.<br>
+                2. Heat oil and cook chicken.<br>
+                3. Serve hot.
+            </div>
+            <div class="timer" id="timer">Timer: 00:00</div>
+            <div class="buttons">
+                <button class="btn" onclick="startTimer(1200)">Cook Now</button>
+                <button class="btn">Breakfast</button>
+                <button class="btn" onclick="window.print()">Print</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let timerInterval;
+        function toggleSection(section) {
+            const element = document.querySelector(`.${section}`);
+            element.classList.toggle('active');
+        }
+        function startTimer(duration) {
+            let timeLeft = duration;
+            const timerDisplay = document.getElementById('timer');
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                let minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+                timerDisplay.textContent = `Timer: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                if (--timeLeft < 0) {
+                    clearInterval(timerInterval);
+                    timerDisplay.textContent = 'Timer: Done!';
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
